@@ -28,6 +28,14 @@ public abstract class UserEntity {
         this.password = password;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

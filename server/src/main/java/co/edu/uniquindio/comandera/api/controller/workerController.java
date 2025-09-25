@@ -17,6 +17,13 @@ public class workerController {
     @Autowired
     private WorkerService workerService;
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateWorker(@PathVariable("id") String id, @Valid @RequestBody WorkerRequestDTO workerDTO) {
+        WorkerResponseDTO updated = workerService.updateWorker(id, workerDTO);
+        return ResponseEntity.ok(updated);
+    }
+
+
     @PostMapping
     public ResponseEntity<?> createWorker(@Valid @RequestBody WorkerRequestDTO workerDTO) {
         try {
@@ -27,11 +34,9 @@ public class workerController {
         }
     }
     
-    
-    
     @GetMapping("/{id}")
-    public ResponseEntity<?> getWorkerById(@PathVariable("id") Long id){
-        if (id == null || id <= 0) {
+    public ResponseEntity<?> getWorkerById(@PathVariable("id") String id){
+        if (id== null ) {
             return ResponseEntity.badRequest().body("El id proporcionado no es válido.");
         }
         try {
@@ -45,6 +50,7 @@ public class workerController {
                     .body("Ocurrió un error al consultar el trabajador.");
         }
     }
+
     @GetMapping("/all")
     public ResponseEntity<?> getAllWorkers() {
         try {
@@ -76,4 +82,5 @@ public class workerController {
                     .body("Ocurrió un error al consultar el trabajador por identificación.");
         }
     }
+
 }

@@ -8,11 +8,13 @@ import jakarta.persistence.Converter;
 public class AreaTypeConverter implements AttributeConverter<Area, String> {
     @Override
     public String convertToDatabaseColumn(Area attribute) {
-        return attribute.name();
+
+        return attribute != null ? attribute.name() : null;
     }
 
     @Override
     public Area convertToEntityAttribute(String dbData) {
-        return Area.valueOf(dbData);
+
+        return dbData != null ? Area.valueOf(dbData) : null;
     }
 }

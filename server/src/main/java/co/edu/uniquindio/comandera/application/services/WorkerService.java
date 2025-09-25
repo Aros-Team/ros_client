@@ -3,13 +3,19 @@ package co.edu.uniquindio.comandera.application.services;
 import co.edu.uniquindio.comandera.api.dto.WorkerRequestDTO;
 import co.edu.uniquindio.comandera.api.dto.WorkerResponseDTO;
 import co.edu.uniquindio.comandera.domain.model.Worker;
+
 import co.edu.uniquindio.comandera.infrastructure.springdata.entity.AreaEntity;
 import co.edu.uniquindio.comandera.infrastructure.springdata.entity.WorkerEntity;
 import co.edu.uniquindio.comandera.repostories.AreaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import co.edu.uniquindio.comandera.repostories.WorkerRepository;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,8 +29,41 @@ public class WorkerService {
     @Autowired
     private AreaRepository areaRepository;
 
+    @Transactional
+    public WorkerResponseDTO updateWorker(String id, WorkerRequestDTO workerDTO) {
+        WorkerEntity worker = workerRepository.findByIdentification(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Worker no encontrado"));
 
+        if(workerDTO.getName()!=null && !workerDTO.getName().isBlank()){
+            worker.setName(workerDTO.getName());
+        }
+        if (workerDTO.getPhone() != null && !workerDTO.getPhone().isBlank()) {
+            worker.setPhone(workerDTO.getPhone());
+        }
+        if (workerDTO.getImage() != null && !workerDTO.getImage().isBlank()) {
+            worker.setImage(workerDTO.getImage());
+        }
+        if (workerDTO.getAddress() != null && !workerDTO.getAddress().isBlank()) {
+            worker.setAddress(workerDTO.getAddress());
+        }
+        if (workerDTO.getObservations() != null && !workerDTO.getObservations().isBlank()) {
+            worker.setObservations(workerDTO.getObservations());
+        }
+        if (workerDTO.getEnable() != null) {
+            worker.setEnable(workerDTO.getEnable());
+        }
 
+        Set<Long> areaIds = workerDTO.getAreaIds();
+        if (areaIds != null) {
+            if (!areaIds.isEmpty()) {
+                Set<AreaEntity> areas = new HashSet<>((Collection<? extends AreaEntity>) areaRepository.findAllById(areaIds));
+                worker.setAreas(areas);
+            }
+        }
+
+        WorkerEntity saved = workerRepository.save(worker);
+        return convertToDTO(saved);
+    }
 
     public WorkerResponseDTO createWorker(WorkerRequestDTO workerDTO) {
 
@@ -39,18 +78,26 @@ public class WorkerService {
                 workerDTO.getEnable() != null ? workerDTO.getEnable() : true
         );
 
+        Set<Long> areaIds = workerDTO.getAreaIds();
+        if (areaIds != null && !areaIds.isEmpty()) {
+            Set<AreaEntity> areas = new HashSet<>((Collection) areaRepository.findAllById(areaIds));
+            worker.setAreas(areas);
+        } else {
+            worker.setAreas(Collections.emptySet());
+        }
+
+
         WorkerEntity savedWorker = workerRepository.save(worker);
 
         return convertToDTO(savedWorker);
     }
     
-    public WorkerResponseDTO getWorkerById(Long id) {
-        //Convert long to string
-        String strId = String.valueOf(id);
-        WorkerEntity worker = workerRepository.findById(strId)
+    public WorkerResponseDTO getWorkerById(String id) {
+        WorkerEntity worker = workerRepository.findByIdentification(id)
                 .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("No se encontró un trabajador con id " + id));
         return convertToDTO(worker);
     }
+
     private WorkerResponseDTO convertToDTO(WorkerEntity worker) {
         WorkerResponseDTO dto = new WorkerResponseDTO();
         dto.setIdentification(worker.getIdentification());
@@ -64,6 +111,7 @@ public class WorkerService {
 
         return dto;
     }
+
     public WorkerResponseDTO getWorkerByIdentification(String identification) {
         if (identification == null || identification.isBlank()) {
             throw new IllegalArgumentException("La identificación no puede estar vacía.");

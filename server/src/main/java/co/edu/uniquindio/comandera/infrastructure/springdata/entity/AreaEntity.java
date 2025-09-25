@@ -85,4 +85,5 @@ public class AreaEntity {
     public void setWorkers(Set<WorkerEntity> workers) {
         this.workers = workers;
     }
+
 }

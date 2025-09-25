@@ -22,9 +22,7 @@ public class AdminEntity extends UserEntity {
         super(name, password);
     }
 
-    public Long getId() {
-        return id;
-    }
+
 
     public void setId(Long id) {
         this.id = id;

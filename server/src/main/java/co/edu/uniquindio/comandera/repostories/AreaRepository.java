@@ -7,5 +7,5 @@ import co.edu.uniquindio.comandera.infrastructure.springdata.entity.AreaEntity;
 
 @Repository
 public interface AreaRepository extends CrudRepository<AreaEntity, Long> {
-    // 
+
 }

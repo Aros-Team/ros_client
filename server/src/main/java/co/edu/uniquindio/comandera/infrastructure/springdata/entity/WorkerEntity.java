@@ -2,19 +2,14 @@ package co.edu.uniquindio.comandera.infrastructure.springdata.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import co.edu.uniquindio.comandera.domain.model.enums.Area;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "workers")
 @PrimaryKeyJoinColumn(name = "id")
 public class WorkerEntity extends UserEntity {
+
     private String identification;
 
     private String phone;

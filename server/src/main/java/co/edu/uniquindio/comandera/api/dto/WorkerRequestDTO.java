@@ -11,6 +11,7 @@ public class WorkerRequestDTO {
     private String address;
     private String observations;
     private Boolean enable;
+    private Set<Long> areaIds;
 
     public String getIdentification() { return identification; }
     public void setIdentification(String identification) { this.identification = identification; }
@@ -35,6 +36,9 @@ public class WorkerRequestDTO {
 
     public Boolean getEnable() { return enable; }
     public void setEnable(Boolean enable) { this.enable = enable; }
+
+    public Set<Long> getAreaIds() { return areaIds; }
+    public void setAreaIds(Set<Long> areaIds) { this.areaIds = areaIds; }
 
 
 }

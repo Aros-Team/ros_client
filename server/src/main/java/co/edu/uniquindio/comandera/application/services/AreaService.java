@@ -3,7 +3,7 @@ package co.edu.uniquindio.comandera.application.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.edu.uniquindio.comandera.repostories.AreaRepository;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.repository.AreaRepository;
 
 @Repository
 public class AreaService {

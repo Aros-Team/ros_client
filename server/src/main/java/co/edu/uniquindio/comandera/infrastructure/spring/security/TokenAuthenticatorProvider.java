@@ -6,8 +6,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import co.edu.uniquindio.comandera.domain.service.TokenService;
 import co.edu.uniquindio.comandera.infrastructure.spring.security.tokens.AuthenticationToken;

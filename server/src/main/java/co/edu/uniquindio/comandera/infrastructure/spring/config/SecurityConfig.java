@@ -14,9 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import co.edu.uniquindio.comandera.domain.repository.UserRepository;
 import co.edu.uniquindio.comandera.infrastructure.spring.filters.TokenFilter;
+import co.edu.uniquindio.comandera.infrastructure.spring.security.TokenAuthenticatorProvider;
 import co.edu.uniquindio.comandera.infrastructure.spring.security.UserDetailsServiceAdapter;
 import co.edu.uniquindio.comandera.infrastructure.spring.security.entrypoint.TokenAuthenticationEntryPoint;
 
@@ -46,6 +49,16 @@ public class SecurityConfig
     }
     
     @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**").allowedOrigins("*");
+            }
+        };
+    }
+    
+    @Bean
     public PasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
@@ -53,15 +66,17 @@ public class SecurityConfig
     
     @Bean
     public TokenFilter tokenFilter(
-        AuthenticationProvider provider,
+        // AuthenticationProvider provider,
         @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver
     ) {
+        AuthenticationProvider provider = new TokenAuthenticatorProvider();
+
         return new TokenFilter(provider, exceptionResolver);
     }
     
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository repository)
-    {
-        return new UserDetailsServiceAdapter(repository);
-    }
+    // @Bean
+    // public UserDetailsService userDetailsService(UserRepository repository)
+    // {
+    //     return new UserDetailsServiceAdapter(repository);
+    // }
 }

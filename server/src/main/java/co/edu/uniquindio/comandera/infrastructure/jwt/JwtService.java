@@ -21,7 +21,6 @@ public class JwtService implements TokenService
     private String accessTokenSecrect;
 
     public JwtService(
-        String refreshTokenSecrect,
         String accessTokenSecrect
     ) {
         // this.refreshTokenSecrect = refreshTokenSecrect;

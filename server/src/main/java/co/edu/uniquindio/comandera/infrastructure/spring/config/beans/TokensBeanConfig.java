@@ -12,11 +12,9 @@ public class TokensBeanConfig
 {
     @Bean
     public TokenService tokenService(
-        @Value("${security.jwt.refresh.secret}")
-        String refreshTokenSecret,
-        @Value("${security.jwt.access.secret}")
+        @Value("${security.token.secret}")
         String accessTokenSecret
     ) {
-        return new JwtService(refreshTokenSecret, accessTokenSecret);
+        return new JwtService(accessTokenSecret);
     }
 }

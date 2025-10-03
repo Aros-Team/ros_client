@@ -3,10 +3,12 @@ package co.edu.uniquindio.comandera.infrastructure.spring.security;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import co.edu.uniquindio.comandera.domain.model.User;
 import co.edu.uniquindio.comandera.domain.repository.UserRepository;
 
+@Service
 public class UserDetailsServiceAdapter implements UserDetailsService
 {
     private UserRepository userRepository;

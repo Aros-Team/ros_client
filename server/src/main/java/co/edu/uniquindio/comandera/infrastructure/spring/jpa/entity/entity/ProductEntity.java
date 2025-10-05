@@ -68,6 +68,9 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product")
     private Set<OrderProductEntity> orders;
 
+    @OneToMany(mappedBy = "orderProduct")
+    private Set<OrderSubProductsEntity> subProducts;
+
     public ProductEntity() {
         this.menus = new HashSet<>();
         this.orders = new HashSet<>();
@@ -189,5 +192,13 @@ public class ProductEntity {
 
     public void setOrders(Set<OrderProductEntity> orders) {
         this.orders = orders;
+    }
+
+    public Set<OrderSubProductsEntity> getSubProducts() {
+        return subProducts;
+    }
+
+    public void setSubProducts(Set<OrderSubProductsEntity> subProducts) {
+        this.subProducts = subProducts;
     }
 }

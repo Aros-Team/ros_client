@@ -1,6 +1,7 @@
 package co.edu.uniquindio.comandera.infrastructure.spring.adapters;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,17 @@ public class ProductRepositoryJpaAdapter implements ProductRepository
                 return CategoryJpaMapper.toEntity(c, null);
             }).toList());
         }
+//
+//        this.internal.save(ProductJpaMapper.toEntity(
+//            product,
+//            AreaJpaMapper.toEntity(product.getPreparationArea(), null, null),
+//            categories
+//        ));
+        }
 
-        this.internal.save(ProductJpaMapper.toEntity(
-            product,
-            AreaJpaMapper.toEntity(product.getPreparationArea(), null, null),
-            categories
-        ));
+    @Override
+    public Optional<Product> findById(Long productId) {
+        return Optional.empty();
     }
+
 }

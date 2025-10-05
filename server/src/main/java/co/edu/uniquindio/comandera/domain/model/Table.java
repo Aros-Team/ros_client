@@ -1,8 +1,9 @@
 package co.edu.uniquindio.comandera.domain.model;
 
 public record Table(
-    Integer id,
+    String id,
     String numTable,
     Boolean isTaken
 ) {
+
 }

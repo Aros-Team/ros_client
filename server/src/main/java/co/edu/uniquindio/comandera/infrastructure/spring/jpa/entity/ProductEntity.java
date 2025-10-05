@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import co.edu.uniquindio.comandera.domain.model.enums.ProductStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public class ProductEntity {
     @JoinColumn(name = "preparation_area")
     private AreaEntity preparationArea;
 
-    // private ProductStatus status;
+    private ProductStatus status;
 
     @Column(name = "prepare_for", nullable = true)
     private LocalDateTime prepararationDate;
@@ -142,6 +143,10 @@ public class ProductEntity {
     // this.status = status;
     // }
 
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
+
     public LocalDateTime getPrepararationDate() {
         return prepararationDate;
     }
@@ -180,5 +185,9 @@ public class ProductEntity {
 
     public void setOrders(Set<OrderProductEntity> orders) {
         this.orders = orders;
+    }
+
+    public ProductStatus getStatus() {
+        return this.status;
     }
 }

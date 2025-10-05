@@ -14,6 +14,8 @@ public class Product
 
     private String description;
 
+    private Float price;
+
     private Integer estimatedTime;
 
     private Area preparationArea;
@@ -148,5 +150,15 @@ public class Product
     public void setQuantity(Integer quantity)
     {
         this.quantity = quantity;
+    }
+
+    public Float getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(Float price)
+    {
+        this.price = price;
     }
 }

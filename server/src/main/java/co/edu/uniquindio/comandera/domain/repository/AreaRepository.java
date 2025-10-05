@@ -13,7 +13,7 @@ public interface AreaRepository {
      *
      * @return area found
      */
-    public Optional<Area> findById(Integer id);
+    public Optional<Area> findById(Long id);
     
     /**
      * find areas using type
@@ -23,4 +23,13 @@ public interface AreaRepository {
      * @return areas with the type
      */
     public List<Area> findByType(Area type);
+
+    /**
+     * check if the categories exists
+     * 
+     * @param ids categories ids
+     * 
+     * @return all the categories exists
+     */
+    public boolean exists(Long ...ids);
 }

@@ -1,7 +1,7 @@
 package co.edu.uniquindio.comandera.infrastructure.spring.mappers;
 
 import co.edu.uniquindio.comandera.domain.model.Admin;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AdminEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.AdminEntity;
 
 public class AdminJpaMapper
 {

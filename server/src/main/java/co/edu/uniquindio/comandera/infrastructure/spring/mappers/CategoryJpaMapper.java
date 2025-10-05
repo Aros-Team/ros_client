@@ -3,8 +3,8 @@ package co.edu.uniquindio.comandera.infrastructure.spring.mappers;
 import java.util.Set;
 
 import co.edu.uniquindio.comandera.domain.model.Category;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.CategoryEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.ProductEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.CategoryEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.ProductEntity;
 
 public class CategoryJpaMapper
 {

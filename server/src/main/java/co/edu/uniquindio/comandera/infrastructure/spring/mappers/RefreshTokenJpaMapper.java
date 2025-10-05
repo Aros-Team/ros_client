@@ -1,8 +1,8 @@
 package co.edu.uniquindio.comandera.infrastructure.spring.mappers;
 
 import co.edu.uniquindio.comandera.domain.util.RefreshToken;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.RefreshTokenEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.UserEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.RefreshTokenEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.UserEntity;
 
 public class RefreshTokenJpaMapper
 {

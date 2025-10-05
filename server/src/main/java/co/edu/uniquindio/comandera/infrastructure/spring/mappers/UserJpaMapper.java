@@ -3,9 +3,9 @@ package co.edu.uniquindio.comandera.infrastructure.spring.mappers;
 import java.util.HashSet;
 
 import co.edu.uniquindio.comandera.domain.model.User;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AdminEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.UserEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.WorkerEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.AdminEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.UserEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.WorkerEntity;
 
 public class UserJpaMapper
 {

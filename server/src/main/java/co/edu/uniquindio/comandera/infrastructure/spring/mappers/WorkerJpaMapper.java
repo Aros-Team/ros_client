@@ -4,7 +4,7 @@ import java.util.Set;
 
 import co.edu.uniquindio.comandera.domain.model.Area;
 import co.edu.uniquindio.comandera.domain.model.Worker;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.WorkerEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.WorkerEntity;
 
 public class WorkerJpaMapper
 {

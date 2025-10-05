@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.WorkerEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.WorkerEntity;
 
 @Repository
 public interface JpaWorkerRepository extends CrudRepository<WorkerEntity, Long> {

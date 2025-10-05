@@ -3,9 +3,9 @@ package co.edu.uniquindio.comandera.infrastructure.spring.mappers;
 import java.util.Set;
 
 import co.edu.uniquindio.comandera.domain.model.Area;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AreaEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.ProductEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.WorkerEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.AreaEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.ProductEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.WorkerEntity;
 
 public class AreaJpaMapper
 {

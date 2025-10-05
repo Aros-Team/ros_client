@@ -5,9 +5,9 @@ import java.util.Set;
 import co.edu.uniquindio.comandera.domain.model.Area;
 import co.edu.uniquindio.comandera.domain.model.Category;
 import co.edu.uniquindio.comandera.domain.model.Product;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AreaEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.CategoryEntity;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.ProductEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.AreaEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.CategoryEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.ProductEntity;
 
 public class ProductJpaMapper
 {

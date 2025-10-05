@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.uniquindio.comandera.domain.model.Area;
 import co.edu.uniquindio.comandera.domain.model.enums.AreaType;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AreaEntity;
+import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.AreaEntity;
 
 @Repository
 public interface JpaAreaRepository extends CrudRepository<AreaEntity, Long>

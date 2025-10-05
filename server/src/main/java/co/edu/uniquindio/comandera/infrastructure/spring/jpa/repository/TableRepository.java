@@ -1,11 +1,16 @@
 package co.edu.uniquindio.comandera.infrastructure.spring.jpa.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.TableEntity;
 
+
 @Repository
 public interface TableRepository extends CrudRepository<TableEntity, Long> {
-    // 
+
+    Optional<TableEntity> findByName(String name);
+
 }

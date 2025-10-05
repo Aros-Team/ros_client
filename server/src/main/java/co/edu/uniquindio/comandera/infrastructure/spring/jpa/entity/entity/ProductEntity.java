@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -20,6 +22,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(
     name = "products",
     uniqueConstraints = @UniqueConstraint(columnNames = { "name" })
@@ -60,7 +63,7 @@ public class ProductEntity {
     private Set<CategoryEntity> categories;
     
     @OneToMany(mappedBy = "product")
-    private Set<DayMenuProduct> menus;
+    private Set<DayMenuProductEntity> menus;
     
     @OneToMany(mappedBy = "product")
     private Set<OrderProductEntity> orders;
@@ -172,11 +175,11 @@ public class ProductEntity {
         this.categories = categories;
     }
 
-    public Set<DayMenuProduct> getMenus() {
+    public Set<DayMenuProductEntity> getMenus() {
         return menus;
     }
 
-    public void setMenus(Set<DayMenuProduct> menus) {
+    public void setMenus(Set<DayMenuProductEntity> menus) {
         this.menus = menus;
     }
 

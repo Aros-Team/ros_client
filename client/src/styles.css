@@ -1,7 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import "../public/css/main.css";
 
-.abuela {
-    width: 100px;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

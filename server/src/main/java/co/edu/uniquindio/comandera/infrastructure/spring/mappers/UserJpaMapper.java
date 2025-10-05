@@ -12,10 +12,6 @@ public class UserJpaMapper
     public static User toDomain(UserEntity entity)
     {
         if (entity instanceof WorkerEntity en) {
-            en.getAreas().stream().forEach(
-                a -> System.out.println(a.getName())
-            );
-
             return WorkerJpaMapper.toDomain(en, new HashSet<>(
                 en.getAreas().stream().map(AreaJpaMapper::toDomain).toList()
             ));

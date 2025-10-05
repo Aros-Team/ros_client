@@ -5,16 +5,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.uniquindio.comandera.domain.model.Admin;
 import co.edu.uniquindio.comandera.domain.model.User;
 import co.edu.uniquindio.comandera.domain.repository.UserRepository;
-import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.AdminEntity;
 import co.edu.uniquindio.comandera.infrastructure.spring.jpa.entity.entity.UserEntity;
 import co.edu.uniquindio.comandera.infrastructure.spring.jpa.repository.JpaUserRepository;
-import co.edu.uniquindio.comandera.infrastructure.spring.mappers.AdminJpaMapper;
 import co.edu.uniquindio.comandera.infrastructure.spring.mappers.UserJpaMapper;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class UserJpaAdapter implements UserRepository
 {
     @Autowired
@@ -35,15 +34,7 @@ public class UserJpaAdapter implements UserRepository
             return Optional.empty();
         }
 
-        if (entity.get() instanceof AdminEntity en) {
-            Admin admin = AdminJpaMapper.toDomain(en);
-
-            return Optional.of(admin);
-        } else {
-            User user = UserJpaMapper.toDomain(entity.get());
-
-            return Optional.of(user);
-        }
+        return Optional.of(UserJpaMapper.toDomain(entity.get()));
     }
     
     @Override

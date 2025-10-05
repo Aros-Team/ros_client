@@ -3,8 +3,6 @@ package co.edu.uniquindio.comandera.domain.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import co.edu.uniquindio.comandera.domain.model.enums.AreaType;
-
 public class Worker extends User
 {
     private String identification;
@@ -19,7 +17,7 @@ public class Worker extends User
 
     private boolean enable;
     
-    private Set<AreaType> areas;
+    private Set<Area> areas;
 
     public Worker(Long id, String name, String email, String password)
     {
@@ -96,11 +94,11 @@ public class Worker extends User
         this.enable = enable;
     }
 
-    public Set<AreaType> getAreas() {
+    public Set<Area> getAreas() {
         return areas;
     }
 
-    public void setAreas(Set<AreaType> areas) {
+    public void setAreas(Set<Area> areas) {
         this.areas = areas;
     }
 }

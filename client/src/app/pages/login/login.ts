@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { LoginForm } from '../../components/authentication/login-form';
+import { Component } from "@angular/core";
+import { LoginForm } from "../../components/authentication/login-form";
 
 @Component({
-  selector: 'app-login',
-  imports: [LoginForm],
-  templateUrl: './login.html',
-  styleUrl: './login.css'
+  selector: "login",
+  templateUrl: "./login.html",
+  imports: [LoginForm]
 })
 export class Login {
-
+  // 
 }

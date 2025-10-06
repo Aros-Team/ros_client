@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/authentication/auth-service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { AuthService } from '../../services/authentication/auth-service';
 
 @Component({
   selector: 'login-form',
   templateUrl: './login-form.html',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule],
 })
 export class LoginForm implements OnInit {
   /**
@@ -44,7 +45,7 @@ export class LoginForm implements OnInit {
   }
 
   ngOnInit(): void {
-    if (! this.authService.isAuthenticated()) {
+    if (!this.authService.isAuthenticated()) {
       this.authService.refresh().subscribe({
         next: (response) => {
           this.router.navigate(['/app']);

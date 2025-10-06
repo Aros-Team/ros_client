@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { Header } from './components/header/header';
 import { InputText } from './components/input-text/input-text';
-import { LoginForm } from './authentication/login-form';
 import { AuthGuard } from './routing/guards/auth-guard';
-import { ProductCreationForm } from './products/creation/product-creation-form';
+import { ProductCreationForm } from './components/creation/product-creation-form';
+import { Login } from './pages/login/login';
 
 export const routes: Routes = [
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginForm,
+    component: Login,
   },
   {
     path: 'admin',

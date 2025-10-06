@@ -17,9 +17,9 @@ DELETE FROM daymenus;
 
 -- Insertar áreas de preparación
 INSERT INTO areas (id, name, type) VALUES
-(1, 'COCINA', 'PREPARACION'),
-(2, 'BAR', 'PREPARACION'),
-(3, 'PARRILLA', 'PREPARACION');
+(1, 'COCINA', 'PRODUCTS'),
+(2, 'BAR', 'PRODUCTS'),
+(3, 'PARRILLA', 'PRODUCTS');
 
 -- Insertar categorías
 INSERT INTO categories (id, name) VALUES
@@ -29,19 +29,19 @@ INSERT INTO categories (id, name) VALUES
 (4, 'Postres');
 
 -- Insertar productos
-INSERT INTO products (id, name, description, price, image, estimate_time, status, preparation_area) VALUES
+INSERT INTO products (id, name, description, price, image, estimate_time, preparation_area) VALUES
 -- Productos COCINA
-(1, 'Hamburguesa Especial', 'Hamburguesa con queso y tocino', 15000, 'hamburguesa.jpg', 15, 'DISPONIBLE', 1),
-(2, 'Pizza Margarita', 'Pizza con tomate y mozzarella', 20000, 'pizza.jpg', 20, 'DISPONIBLE', 1),
-(3, 'Ensalada César', 'Ensalada con pollo y aderezo césar', 10000, 'ensalada.jpg', 10, 'DISPONIBLE', 1),
+(1, 'Hamburguesa Especial', 'Hamburguesa con queso y tocino', 15000, 'hamburguesa.jpg', 15, 1),
+(2, 'Pizza Margarita', 'Pizza con tomate y mozzarella', 20000, 'pizza.jpg', 20, 1),
+(3, 'Ensalada César', 'Ensalada con pollo y aderezo césar', 10000, 'ensalada.jpg', 10, 1),
 
 -- Productos BAR
-(4, 'Cerveza Artesanal', 'Cerveza rubia artesanal', 8000, 'cerveza.jpg', 5, 'DISPONIBLE', 2),
-(5, 'Margarita Clásica', 'Cóctel de tequila y limón', 12000, 'margarita.jpg', 8, 'DISPONIBLE', 2),
-(6, 'Café Americano', 'Café negro americano', 5000, 'cafe.jpg', 3, 'DISPONIBLE', 2),
+(4, 'Cerveza Artesanal', 'Cerveza rubia artesanal', 8000, 'cerveza.jpg', 5, 2),
+(5, 'Margarita Clásica', 'Cóctel de tequila y limón', 12000, 'margarita.jpg', 8, 2),
+(6, 'Café Americano', 'Café negro americano', 5000, 'cafe.jpg', 3, 2),
 
 -- Productos PARRILLA
-(7, 'Costillas BBQ', 'Costillas de cerdo en salsa BBQ', 25000, 'costillas.jpg', 25, 'DISPONIBLE', 3);
+(7, 'Costillas BBQ', 'Costillas de cerdo en salsa BBQ', 25000, 'costillas.jpg', 25, 3);
 
 -- Relacionar productos con categorías
 INSERT INTO product_categories (product_id, category_id) VALUES
@@ -62,21 +62,23 @@ INSERT INTO tables (id, name, enable) VALUES
 
 -- Insertar usuarios
 INSERT INTO users (id, name, email, password) VALUES
-(1, 'Carlos Chef', 'carlos@restaurante.com', '$2a$10$GwLP1vlsW9HMSiSZ257laOIs2PnZzf1nXLxmLR1Hj1.A7cPpfC9Oy'),
+(1, 'Carlos Admin', 'carlos@restaurante.com', '$2a$10$GwLP1vlsW9HMSiSZ257laOIs2PnZzf1nXLxmLR1Hj1.A7cPpfC9Oy'),
 (2, 'Maria Bartender', 'maria@restaurante.com', '$2a$10$GwLP1vlsW9HMSiSZ257laOIs2PnZzf1nXLxmLR1Hj1.A7cPpfC9Oy'),
 (3, 'Pedro Parrillero', 'pedro@restaurante.com', '$2a$10$GwLP1vlsW9HMSiSZ257laOIs2PnZzf1nXLxmLR1Hj1.A7cPpfC9Oy'),
 (4, 'Ana Mesera', 'ana@restaurante.com', '$2a$10$GwLP1vlsW9HMSiSZ257laOIs2PnZzf1nXLxmLR1Hj1.A7cPpfC9Oy');
 
 -- Insertar workers
 INSERT INTO workers (id, identification, phone, address, image, observations, enable) VALUES
-(1, '123456789', '3001112233', 'Calle 123', 'carlos.jpg', 'Chef principal', true),
 (2, '987654321', '3004445566', 'Carrera 456', 'maria.jpg', 'Bartender experta', true),
 (3, '456789123', '3007778899', 'Avenida 789', 'pedro.jpg', 'Especialista en parrilla', true),
 (4, '789123456', '3002223344', 'Diagonal 012', 'ana.jpg', 'Mesera', true);
 
+INSERT INTO administrators (id) VALUES
+(1);
+
 -- Relacionar workers con áreas
 INSERT INTO worker_areas (worker_id, area_id) VALUES
-(1, 1), -- Carlos trabaja en COCINA
+-- (1, 1), -- Carlos trabaja en COCINA
 (2, 2), -- Maria trabaja en BAR
 (3, 3), -- Pedro trabaja en PARRILLA
 (4, 1), -- Ana también puede trabajar en COCINA

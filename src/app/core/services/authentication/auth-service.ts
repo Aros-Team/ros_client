@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, tap } from 'rxjs';
-import { AuthResponse } from '../../application/auth/dto/auth-response.model';
-import { AuthRequest } from '../../application/auth/dto/auth-request.model';
-import { UserInfo } from '../../application/user/dto/user-info.model';
+import { AuthResponse } from '../../../shared/models/application/auth/dto/auth-response.model';
+import { AuthRequest } from '../../../shared/models/application/auth/dto/auth-request.model';
+import { UserInfo } from '../../../shared/models/application/user/dto/user-info.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,7 @@ export class AuthService {
           this.http.get<UserInfo>('http://localhost:8080/api/proof', {}).subscribe((res) => {
             this.data = res;
           });
-        })
+        }),
       );
   }
 
@@ -57,7 +57,7 @@ export class AuthService {
         this.http.get<UserInfo>('http://localhost:8080/api/proof', {}).subscribe((res) => {
           this.data = res;
         });
-      })
+      }),
     );
   }
 

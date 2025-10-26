@@ -1,24 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/authentication/auth-service';
+import { AuthService } from '../../../core/services/authentication/auth-service';
 
 @Component({
   selector: 'login-form',
   templateUrl: './login-form.html',
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    CommonModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class LoginForm implements OnInit {
   /**
@@ -31,7 +20,10 @@ export class LoginForm implements OnInit {
 
   formStatus: 'Free' | 'Occuped' = 'Free';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {
     //
   }
 
@@ -65,7 +57,7 @@ export class LoginForm implements OnInit {
         error: (err) => {
           this.authService.logout();
           console.error(err);
-        }
+        },
       });
     }
   }
@@ -76,5 +68,4 @@ export class LoginForm implements OnInit {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
 }

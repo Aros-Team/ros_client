@@ -1,22 +1,20 @@
 import {
-    ApplicationConfig,
-    provideBrowserGlobalErrorListeners,
-    provideZoneChangeDetection,
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import {
-    HTTP_INTERCEPTORS,
-    provideHttpClient,
-    withInterceptorsFromDi,
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
 import { AuthInterceptor } from '@core/interceptors/auth-interceptor';
 import { routes } from './app.routes';
 
-
-import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-
+import { providePrimeNG } from 'primeng/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,11 +27,10 @@ export const appConfig: ApplicationConfig = {
       useClass: AuthInterceptor,
       multi: true,
     },
-    provideAnimationsAsync(),
-            providePrimeNG({
-                theme: {
-                    preset: Aura
-                }
-            })
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    })
   ],
 };

@@ -28,17 +28,13 @@ export class AuthService {
   login(credentials: AuthRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>('http://localhost:8080/api/login', {
-        username: credentials.email,
+        document: credentials.document,
         password: credentials.password,
       })
       .pipe(
         tap((response: AuthResponse) => {
           localStorage.setItem('refresh', response.refresh);
           this.token = response.access;
-
-          this.http.get<UserInfo>('http://localhost:8080/api/proof', {}).subscribe((res: UserInfo) => {
-            this.data = res;
-          });
         }),
       );
   }
@@ -55,9 +51,6 @@ export class AuthService {
         localStorage.setItem('refresh', response.refresh);
         this.token = response.access;
 
-        this.http.get<UserInfo>('http://localhost:8080/api/proof', {}).subscribe((res: UserInfo) => {
-          this.data = res;
-        });
       }),
     );
   }
@@ -78,6 +71,5 @@ export class AuthService {
   getData() {
     return this.data;
   }
-
 
 }

@@ -2,13 +2,23 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PasswordModule } from 'primeng/password';
+import { MessageModule } from 'primeng/message'
 import { AuthService } from '@services/authentication/auth-service';
-
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button'
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.html',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule,
+            CommonModule,
+            PasswordModule,
+            MessageModule,
+            FloatLabelModule,
+            InputTextModule,
+            ButtonModule],
 })
 export class LoginForm implements OnInit {
   private authService = inject(AuthService);
@@ -18,7 +28,7 @@ export class LoginForm implements OnInit {
    * form
    */
   form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    document: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -29,7 +39,7 @@ export class LoginForm implements OnInit {
 
     this.authService
       .login({
-        email: this.form.get('email')?.value,
+        document: this.form.get('document')?.value,
         password: this.form.get('password')?.value,
       })
       .subscribe({
@@ -59,6 +69,10 @@ export class LoginForm implements OnInit {
     }
   }
 
+  isInvalid(value:string):boolean {
+    return this.form.get(value)!.invalid && this.form.get(value)!.touched;
+  }
+
   // Buttom signal
   hide = signal(true);
   clickEvent(event: MouseEvent) {
@@ -66,11 +80,4 @@ export class LoginForm implements OnInit {
     event.stopPropagation();
   }
 
-  toggleDarkMode() {
-    const element = document.querySelector('html');
-    if (element!=null) {
-      element.classList.toggle('dark')
-    };
-
-  }
 }

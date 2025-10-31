@@ -4,6 +4,9 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 import {
   HTTP_INTERCEPTORS,
@@ -67,6 +70,9 @@ export const appConfig: ApplicationConfig = {
             darkModeSelector: '.dark'
         }
       }
-    })
+    }),
+    MessageService,
+    provideAnimations(),
+
   ],
 };

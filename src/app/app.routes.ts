@@ -3,6 +3,13 @@ import { AuthGuard } from '@core/guards/auth-guard';
 import { RoleGuard } from '@core/guards/role-guard';
 import { RedirectGuard } from '@app/core/guards/redirect-guard';
 import { ProductCreationForm } from '@features/admin/creation/product-creation-form';
+import { Dashboard } from '@features/admin/dashboard/dashboard';
+import { Debug } from '@features/admin/debug/debug';
+import { Orders } from '@features/admin/orders/orders';
+import { Manage } from '@features/admin/manage/manage';
+import { Products } from '@features/admin/manage/products/products';
+import { Menu } from '@features/admin/manage/menu/menu';
+import { Analytics } from '@features/admin/analytics/analytics';
 import { Login } from '@areas/login/login-area';
 import { AdminArea } from '@areas/admin/admin-area';
 import { WorkerArea } from '@areas/worker/worker-area';
@@ -20,8 +27,38 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     children: [
       {
+        path: '',
+        component: Dashboard,
+      },
+      {
+        path: 'orders',
+        component: Orders,
+      },
+      {
+        path: 'manage',
+        component: Manage,
+        children: [
+          {
+            path: 'products',
+            component: Products,
+          },
+          {
+            path: 'menu',
+            component: Menu,
+          },
+        ]
+      },
+      {
+        path: 'analytics',
+        component: Analytics,
+      },
+      {
         path: 'create-product',
         component: ProductCreationForm,
+      },
+      {
+        path: 'debug',
+        component: Debug,
       },
     ],
   },

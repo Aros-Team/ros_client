@@ -1,18 +1,245 @@
 <div class="h-full flex flex-col p-6">
-    <!-- Header with back button -->
-    <div class="flex items-center gap-4 mb-6">
-        <a [routerLink]="['/admin/manage']"
-           class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200">
-            <i class="pi pi-arrow-left"></i>
-            <span>Volver al gestor</span>
-        </a>
-        <h1 class="text-3xl font-bold text-surface-900 dark:text-surface-0">{{ title }}</h1>
-    </div>
+  <!-- Header with back button -->
+  <div class="flex items-center gap-4 mb-6">
+    <a
+      [routerLink]="['/admin/manage']"
+      class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
+    >
+      <i class="pi pi-arrow-left"></i>
+      <span>Volver al gestor</span>
+    </a>
+    <h1 class="text-3xl font-bold text-surface-900 dark:text-surface-0">{{ title }}</h1>
+  </div>
 
-    <p class="text-surface-600 dark:text-surface-400 mb-8">{{ description }}</p>
+  <p class="text-surface-600 dark:text-surface-400 mb-8">{{ description }}</p>
 
-    <div class="bg-surface-0 dark:bg-surface-800 rounded-lg shadow-sm border border-surface-200 dark:border-surface-700 p-6">
+  <!-- <div class="bg-surface-0 dark:bg-surface-800 rounded-lg shadow-sm border border-surface-200 dark:border-surface-700 p-6">
         <p class="text-surface-700 dark:text-surface-300">Contenido de gestión de productos (Carta)</p>
         <p class="text-surface-500 dark:text-surface-400 mt-4">Aquí irá la gestión completa de productos con CRUD, categorías, precios, etc.</p>
+    </div> -->
+
+  <div class="flex justify-end gap-2 mb-3">
+    <p-multiselect
+      [options]="availableCategories"
+      display="chip"
+      [maxSelectedLabels]="3"
+      class="w-6/12"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="filtro de categorias"
+      [formControl]="filterCategories"
+    />
+    <p-button icon="pi pi-filter" label="Filtrar" (click)="filterProducts()" />
+  </div>
+
+  <div>
+    @if (products === undefined) {
+    <div class="flex justify-center items-center my-8">
+      <p-progress-spinner aria-label="loading" />
     </div>
+    } @else {
+    <p-table
+      #dt1
+      [value]="products"
+      [paginator]="true"
+      [rows]="10"
+      stripedRows
+      showGridlines
+      [globalFilterFields]="['name']"
+    >
+      <ng-template #caption>
+        <div class="flex">
+          <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" />
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input
+              pInputText
+              type="text"
+              (input)="dt1.filterGlobal($event.target.value, 'contains')"
+              placeholder="Buscar por nombre"
+            />
+          </p-iconfield>
+          <button pButton icon="pi pi-plus" class="ml-2" (click)="showCreationModal()">
+            Crear nuevo
+          </button>
+        </div>
+      </ng-template>
+      <ng-template #header>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Estado</th>
+          <th>Area</th>
+          <th>Tiempo de preparacion</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ currencyFormat.format(product.price) }}</td>
+          <td>
+            <div>
+              <span class="{{ product.active ? 'text-green-600' : 'text-red-600' }}">
+                {{ product.active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </div>
+          </td>
+          <td>{{ product.preparationArea ?? 'N/A' }}</td>
+          <td>{{ product.preparationTime }}</td>
+          <td>
+            <div class="flex gap-2">
+              <button pButton size="small" (click)="showModificationModal(product.id)">
+                <i class="pi pi-pencil"></i> <span>Editar</span>
+              </button>
+              <!--
+                <button pButton size="small" severity="danger">
+                  <i class="pi pi-trash"></i> <span>Eliminar</span>
+                </button>
+              -->
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    }
+  </div>
 </div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="modalIsOpen"
+  [header]="modalMode == 'edit' ? 'Editar producto' : 'Crear producto'"
+  draggable="false"
+  [style]="{ width: '45vw', padding: '2' }"
+>
+  <div class="p-0">
+    @if (modalMode == 'edit') {
+    <span class="p-text-secondary block mb-4">Modifica un producto</span>
+    } @else {
+    <span class="p-text-secondary block mb-4">Crea un nuevo producto</span>
+    }
+  </div>
+
+  <form action="" [formGroup]="form">
+    <div>
+      <p-iftalabel class="mb-4">
+        <input
+          pInputText
+          id="name"
+          class="flex-auto w-full"
+          autocomplete="off"
+          formControlName="name"
+          [invalid]="isInvalidField('name')"
+          placeholder="Nombre del producto"
+        />
+        <label for="name" class="font-semibold w-50">nombre</label>
+        <form-validation field="name"></form-validation>
+      </p-iftalabel>
+
+      <p-iftalabel class="mb-4">
+        <p-inputnumber
+          formControlName="price"
+          [invalid]="isInvalidField('price')"
+          placeholder="precio del producto"
+          mode="currency"
+          inputId="price"
+          currency="COP"
+          locale="es-CO"
+          class="w-full"
+        />
+        <label for="price">precio</label>
+        <form-validation field="price" />
+      </p-iftalabel>
+
+      @if (modalMode == 'edit') {
+      <p-iftalabel class="mb-4">
+        <p-select
+          [options]="[
+            { label: 'Activo', value: true },
+            { label: 'Inactivo', value: false }
+          ]"
+          inputId="active"
+          placeholder="Seleccionar estado"
+          class="w-full"
+          formControlName="active"
+          [invalid]="isInvalidField('active')"
+        />
+        <label for="active">estado</label>
+        <form-validation field="active" />
+      </p-iftalabel>
+      }
+
+      <p-iftalabel class="mb-4">
+        <p-select
+          [options]="availablePreparationAreas"
+          inputId="area"
+          placeholder="Seleccionar area de preparacion"
+          class="w-full"
+          optionValue="id"
+          optionLabel="name"
+          formControlName="preparationArea"
+          [invalid]="isInvalidField('area')"
+        />
+        <label for="area">area</label>
+        <form-validation field="area" />
+      </p-iftalabel>
+
+      <p-iftalabel class="mb-4">
+        <p-inputnumber
+          inputId="time"
+          class="w-full"
+          localde="es-CO"
+          placeholder="Tiempo de preparacion del producto"
+          formControlName="preparationTime"
+          [invalid]="isInvalidField('preparationTime')"
+        />
+        <label for="time">tiempo de preparacion (minutos)</label>
+        <form-validation field="preparationTime" />
+      </p-iftalabel>
+
+      <p-iftalabel class="mb-4">
+        <p-multiselect
+          [options]="availableCategories"
+          formControlName="categories"
+          placeholder="Seleccionar categorias"
+          optionLabel="name"
+          optionValue="id"
+          inputId="categories"
+          filter="true"
+          class="w-full"
+          [invalid]="isInvalidField('categories')"
+        />
+        <label for="categories">Categorias</label>
+        <form-validation field="categories" />
+      </p-iftalabel>
+
+      <p-iftalabel class="mb-4">
+        <textarea
+          pTextarea
+          [autoResize]="true"
+          name="description"
+          rows="3"
+          class="w-full"
+          placeholder="Descripcion del producto"
+          formControlName="description"
+          [invalid]="isInvalidField('description')"
+        ></textarea>
+        <label for="description">Descripcion</label>
+        <form-validation field="description" />
+      </p-iftalabel>
+    </div>
+  </form>
+
+  <div class="flex justify-start gap-2 mt-8">
+    @if (modalMode == 'edit') {
+    <p-button icon="pi pi-save" label="Actualizar producto" (click)="updateProduct()" />
+    } @else {
+    <p-button icon="pi pi-save" label="Crear producto" (click)="createProduct()" />
+    }
+
+    <p-button icon="pi pi-ban" label="Cancelar" severity="secondary" (click)="closeModal()" />
+  </div>
+</p-dialog>

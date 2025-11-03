@@ -1,0 +1,23 @@
+<p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Date</th>
+      <th>Table</th>
+      <th>Total Price</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order>
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.date }}</td>
+      <td>{{ order.table }}</td>
+      <td>{{ order.totalPrice | currency:'COP':'symbol':'1.2-2' }}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<div *ngIf="loading" class="mt-4 text-surface-600 dark:text-surface-300">Cargando pedidos...</div>
+<div *ngIf="error" class="mt-4 text-red-600">{{ error }}</div>

@@ -4,7 +4,6 @@ import { RoleGuard } from '@core/guards/role-guard';
 import { RedirectGuard } from '@app/core/guards/redirect-guard';
 import { ProductCreationForm } from '@features/admin/creation/product-creation-form';
 import { Dashboard } from '@features/admin/dashboard/dashboard';
-import { Debug } from '@features/admin/debug/debug';
 import { Orders } from '@features/admin/orders/orders';
 import { Manage } from '@features/admin/manage/manage';
 import { Products } from '@features/admin/manage/products/products';
@@ -55,10 +54,6 @@ export const routes: Routes = [
       {
         path: 'create-product',
         component: ProductCreationForm,
-      },
-      {
-        path: 'debug',
-        component: Debug,
       },
     ],
   },

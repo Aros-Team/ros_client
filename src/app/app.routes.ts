@@ -13,6 +13,7 @@ import { Analytics } from '@features/admin/analytics/analytics';
 import { Login } from '@areas/login/login-area';
 import { AdminArea } from '@areas/admin/admin-area';
 import { WorkerArea } from '@areas/worker/worker-area';
+import { Users } from './features/admin/manage/users/users';
 
 export const routes: Routes = [
 
@@ -46,6 +47,10 @@ export const routes: Routes = [
             path: 'menu',
             component: Menu,
           },
+          {
+            path: 'users',
+            component: Users,
+          }
         ]
       },
       {

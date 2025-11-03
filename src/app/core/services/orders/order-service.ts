@@ -12,4 +12,18 @@ export class OrderService {
   public getOrders(): Observable<OrderResponse[]> {
     return this.http.get<OrderResponse[]>(`http://localhost:8080/api/orders/all`);
   }
+
+
+  // GET http://localhost:8080/api/orders/status/{status}
+  // Backend returns all orders if status is invalid or not provided.
+  public getOrdersByStatus(status: string): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`http://localhost:8080/api/orders/status/${status}`);
+  }
+
+  public getOrdersByStatusOrAll(status?: string): Observable<OrderResponse[]> {
+    if (!status) {
+      return this.getOrders();
+    }
+    return this.getOrdersByStatus(status);
+  }
 }

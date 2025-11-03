@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrdersTable } from '@app/shared/components/orders/orders-table';
+import { OrdersTable } from '@features/orders/orders-table';
 
 @Component({
   selector: 'app-orders',

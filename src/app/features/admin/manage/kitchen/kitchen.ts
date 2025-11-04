@@ -17,6 +17,7 @@ export class Kitchen implements OnInit {
   loading = false;
   error: string | null = null;
   pendingOrders: OrderDetailsResponse[] = [];
+  processing = new Set<number>();
 
   constructor(private orderService: OrderService) {}
 
@@ -40,8 +41,20 @@ export class Kitchen implements OnInit {
   }
 
   completeOrder(orderId: number): void {
-    // Acción pendiente: marcar pedido como completado.
-    // Por ahora no realiza ninguna operación.
-    console.log('Completar pedido', orderId);
+    if (!orderId || this.processing.has(orderId)) return;
+    this.error = null;
+    this.processing.add(orderId);
+    this.orderService.markOrderAsCompleted(orderId).subscribe({
+      next: () => {
+        // Remove order from list locally upon success
+        this.pendingOrders = this.pendingOrders.filter(o => o.id !== orderId);
+      },
+      error: () => {
+        this.error = 'No se pudo marcar el pedido como completado.';
+      },
+      complete: () => {
+        this.processing.delete(orderId);
+      }
+    });
   }
 }

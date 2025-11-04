@@ -18,6 +18,11 @@ export class OrderService {
     return this.http.get<OrderDetailsResponse[]>(`http://localhost:8080/api/orders/details`);
   }
 
+  // PATCH http://localhost:8080/api/orders/{id}/mark-order-as-completed
+  public markOrderAsCompleted(id: number): Observable<void> {
+    return this.http.patch<void>(`http://localhost:8080/api/orders/${id}/mark-order-as-completed`, {});
+  }
+
   // GET http://localhost:8080/api/orders/status/{status}
   // Backend returns all orders if status is invalid or not provided.
   public getOrdersByStatus(status: string): Observable<OrderResponse[]> {

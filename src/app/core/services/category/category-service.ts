@@ -11,10 +11,14 @@ export class CategoryService {
   private http = inject(HttpClient);
 
   public getCategories(): Observable<CategorySimpleResponse[]> {
-    return this.http.get<CategorySimpleResponse[]>('http://localhost:8080/api/categories');
+    return this.http.get<CategorySimpleResponse[]>('categories');
   }
 
   public createCategory(data: CategoryCreateRequest): Observable<object> {
-    return this.http.post('http://localhost:8080/api/categories', data);
+    return this.http.post('categories', data);
+  }
+
+  public deleteCategory(id: number): Observable<Object> {
+    return this.http.delete(`categories/${id}`);
   }
 }

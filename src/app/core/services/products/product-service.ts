@@ -35,34 +35,32 @@ export interface Product {
 })
 export class ProductService {
   constructor(private http: HttpClient) {}
-  
 
-  
   public getProducts(): Observable<ProductSimpleResponse[]> {
-    return this.http.get<ProductSimpleResponse[]>('http://localhost:8080/api/products/no-daymenu');
+    return this.http.get<ProductSimpleResponse[]>('products/no-daymenu');
   }
 
   public filterByCategories(categories: number[]) {
-    return this.http.get<ProductSimpleResponse[]>('http://localhost:8080/api/products/filter', {
+    return this.http.get<ProductSimpleResponse[]>('products/filter', {
       params: { categories },
     });
   }
 
   public createProduct(data: ProductCreateRequest): Observable<object> {
-    return this.http.post('http://localhost:8080/api/products/create', data);
+    return this.http.post('products/create', data);
   }
 
   public updateProduct(data: ProductUpdateRequest): Observable<object> {
-    return this.http.put('http://localhost:8080/api/products/update', data);
+    return this.http.put('products/update', data);
   }
 
   public findProduct(id: number): Observable<ProductReponse> {
-    return this.http.get<ProductReponse>(`http://localhost:8080/api/products/${id}`);
+    return this.http.get<ProductReponse>(`products/${id}`);
   }
 
   getProductById(id: number): Observable<Product | undefined> {
     return this.getProducts().pipe(
-      map((products: any[]) => products.find((product: { id: number; }) => product.id === id))
+      map((products: any[]) => products.find((product: { id: number }) => product.id === id))
     );
   }
 }

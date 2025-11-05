@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { OrderService } from '@app/core/services/orders/order-service';
 import { OrderDetailsResponse } from '@app/shared/models/dto/orders/order-details-response.model';
@@ -11,6 +11,7 @@ import { OrderDetailsResponse } from '@app/shared/models/dto/orders/order-detail
   styles: ``
 })
 export class Kitchen implements OnInit {
+  private orderService: OrderService = inject(OrderService);
   title = 'Cocina';
   description = 'Gestión de las operaciones de cocina y preparación de pedidos';
 
@@ -18,8 +19,6 @@ export class Kitchen implements OnInit {
   error: string | null = null;
   pendingOrders: OrderDetailsResponse[] = [];
   processing = new Set<number>();
-
-  constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.fetchOrders();

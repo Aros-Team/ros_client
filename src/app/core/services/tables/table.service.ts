@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { environment } from '@environments/environment';
 
 export interface Table {
   id: number;
@@ -15,10 +14,9 @@ export interface Table {
 })
 export class TableService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl;
 
   getTables(): Observable<Table[]> {
-    return this.http.get<Table[]>(`${this.apiUrl}/tables/status`);
+    return this.http.get<Table[]>('tables/status');
   }
 
   getTableByName(name: string): Observable<Table | undefined> {

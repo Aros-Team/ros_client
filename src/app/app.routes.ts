@@ -17,6 +17,7 @@ import { KitchenArea } from '@areas/kitchen/kitchen-area';
 import { WaiterArea } from '@areas/waiter/waiter-area';
 import { BarArea } from '@areas/bar/bar-area';
 import { Users } from './features/admin/manage/users/users';
+import { Kitchen } from '@features/admin/manage/kitchen/kitchen';
 
 export const routes: Routes = [
 
@@ -61,6 +62,10 @@ export const routes: Routes = [
           {
             path: 'users',
             component: Users,
+          },
+          {
+            path: 'kitchen',
+            component: Kitchen,
           }
         ]
       },

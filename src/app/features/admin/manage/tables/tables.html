@@ -13,6 +13,18 @@
 
   <p class="text-surface-600 dark:text-surface-400 mb-8">{{ description }}</p>
 
+  <!-- Mostrar cantidad actual de mesas -->
+  <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+    <div class="flex items-center gap-3">
+      <i class="pi pi-info-circle text-blue-600 dark:text-blue-400 text-xl"></i>
+      <div>
+        <p class="text-surface-900 dark:text-surface-0 font-semibold">
+          Cantidad actual de mesas: <span class="text-blue-600 dark:text-blue-400">{{ currentTableAmount }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="bg-surface-0 dark:bg-surface-800 rounded-lg shadow-sm border border-surface-200 dark:border-surface-700 p-6">
     <form [formGroup]="tableForm" (ngSubmit)="saveTableCount()">
       <div class="flex flex-col gap-6 max-w-md">

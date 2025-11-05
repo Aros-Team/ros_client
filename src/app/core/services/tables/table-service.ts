@@ -8,7 +8,11 @@ import { Observable } from "rxjs";
 export class TableService {
   private http = inject(HttpClient);
 
-  public updateTableCount(total: number): Observable<object> {
-    return this.http.post('http://localhost:8080/api/tables/update-count', { total });
+  public createMultipleTables(total: number): Observable<object> {
+    return this.http.post('http://localhost:8080/api/tables/create-multiple', { count:total });
+  }
+
+  public getTableAmount(): Observable<{ amount: number }> {
+    return this.http.get<{ amount: number }>('http://localhost:8080/api/tables/get-amount');
   }
 }

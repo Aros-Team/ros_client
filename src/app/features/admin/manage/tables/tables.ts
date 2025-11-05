@@ -30,9 +30,27 @@ export class Tables {
   title = 'Gestión de Mesas';
   description = 'Configura el número total de mesas del restaurante';
 
+  currentTableAmount = 0;
+
   tableForm: FormGroup = new FormGroup({
     total: new FormControl(0, [Validators.required, Validators.min(1)]),
   });
+
+  constructor() {
+    this.loadCurrentTableAmount();
+  }
+
+  loadCurrentTableAmount(): void {
+    this.tableService.getTableAmount().subscribe({
+      next: (response) => {
+        this.currentTableAmount = response.amount;
+      },
+      error: (err) => {
+        console.error('Error al obtener la cantidad de mesas:', err);
+        this.currentTableAmount = 0;
+      }
+    });
+  }
 
   saveTableCount(): void {
     if (this.tableForm.valid) {
@@ -40,15 +58,17 @@ export class Tables {
       console.log('Enviando petición con total:', total);
       console.log('JSON que se enviará:', { total });
 
-      this.tableService.updateTableCount(total).subscribe({
+      this.tableService.createMultipleTables(total).subscribe({
         next: (response) => {
           console.log('Respuesta exitosa del servidor:', response);
           this.messageService.add({
             severity: 'success',
             summary: 'Operación exitosa',
-            detail: `Se han configurado ${total} mesas exitosamente.`,
+            detail: `Se han agregado ${total} mesas exitosamente.`,
             life: 3000,
           });
+          // Recargar la cantidad actual de mesas
+          this.loadCurrentTableAmount();
         },
         error: (err) => {
           console.error('Error completo:', err);
@@ -56,7 +76,7 @@ export class Tables {
           console.error('Mensaje:', err.message);
           console.error('Error del servidor:', err.error);
 
-          let errorMessage = 'No se pudo guardar la configuración de mesas.';
+          let errorMessage = 'No se pudo guardar la cantidad de mesas.';
           if (err.status === 0) {
             errorMessage = 'No se puede conectar con el servidor. Verifica que la API esté corriendo en el puerto 8080.';
           } else if (err.error?.message) {

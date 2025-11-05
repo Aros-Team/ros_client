@@ -97,7 +97,6 @@
   </div>
 </div>
 
-<!-- creation modal -->
 <p-dialog
   header="{{ editing ? 'Editar Usuario' : 'Crear Usuario' }}"
   [modal]="true"
@@ -122,7 +121,6 @@
             class="flex-auto w-full"
             autocomplete="off"
             formControlName="document"
-            [invalid]="isValidField('document')"
             placeholder="Numero de documento del usuario"
           />
           <label for="create.document" class="font-semibold w-50">Documento</label>

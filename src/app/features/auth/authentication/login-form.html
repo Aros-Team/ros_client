@@ -1,0 +1,45 @@
+<div class="min-w-[300px] mx-auto my-8">
+    <h1 class="text-xl font-bold mb-6 text-center text-surface">Inicio de sesión</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 mt-8">
+
+      <div>
+        <label for="document" class="text-sm">Cedula</label>
+          <input
+            pInputText
+            [invalid]="isInvalid('document')"
+            id="document"
+            type="text"
+            formControlName="document"
+            fluid
+          />
+        @if (form.get('document')?.invalid && form.get('document')?.touched) {
+          <div class="text-red-500 text-sm">
+            Campo requerido*
+          </div>
+        }
+      </div>
+
+      <div>
+          <label for="password" class="text-sm">Contraseña</label>
+          <p-password id="password" formControlName="password" [invalid]="isInvalid('password')" [feedback]="false" [toggleMask]="true" autocomplete="off" fluid  />
+        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+          <div class="text-red-500 text-sm">
+            Campo requerido*
+          </div>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        class="mt-4 m-auto"
+        [disabled]="formStatus === 'Occuped' || form.invalid"
+      >
+        @if (formStatus === 'Free') {
+          <span>Ingresar</span>
+        }
+        @if (formStatus === 'Occuped') {
+          <span>Iniciando sesión...</span>
+        }
+      </p-button>
+    </form>
+</div>

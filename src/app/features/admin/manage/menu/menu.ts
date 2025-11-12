@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -153,6 +154,24 @@ export class Menu {
         });
       });
 
+      // Validación: evitar productos repetidos en todo el menú (únicos por daymenu)
+      const allSelectedIds = formValue.products
+        .flatMap((c: { productIds: number[] }) => c.productIds)
+        .map((id: number | string) => Number(id));
+      const seen = new Set<number>();
+      const duplicates: number[] = [];
+      for (const id of allSelectedIds) {
+        if (seen.has(id)) {
+          if (!duplicates.includes(id)) duplicates.push(id);
+        } else {
+          seen.add(id);
+        }
+      }
+      if (duplicates.length > 0) {
+        const dupNames = duplicates.map(id => this.getProductDisplayName(id));
+        validationErrors.push(`Hay productos repetidos en el menú: ${dupNames.join(', ')}`);
+      }
+
       if (validationErrors.length > 0) {
         this.messageService.add({
           severity: 'error',
@@ -169,21 +188,23 @@ export class Menu {
 
       const dayMenuRequest: DayMenuCreateRequest = {
         name: formValue.name,
-        price: formValue.price,
+        price: Number(formValue.price),
         date: dateString,
         products: formValue.products.map((category: { categoryId: number; productIds: number[] }, index: number) => ({
           category: category.categoryId,
           position: index + 1,
-          products: category.productIds
+          products: category.productIds.map((id: number | string) => Number(id))
         }))
       };
+
+      console.log('Submitting day menu request:', dayMenuRequest);
 
       this.dayMenuService.createDayMenu(dayMenuRequest).subscribe({
         next: (response) => {
           this.messageService.add({
             severity: 'success',
             summary: 'Éxito',
-            detail: response || 'Menú del día creado exitosamente'
+            detail: typeof response === 'string' ? response : (response as { message?: string })?.message || 'Menú del día creado exitosamente'
           });
           this.dayMenuForm.reset({
             name: '',
@@ -194,7 +215,8 @@ export class Menu {
         },
         error: (error) => {
           console.error('Error creating day menu:', error);
-          const errorMessage = error.error?.message || error.message || 'No se pudo crear el menú del día';
+          console.error('API error payload:', error?.error);
+          const errorMessage = this.extractApiErrorMessage(error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -211,6 +233,58 @@ export class Menu {
         detail: 'Por favor complete todos los campos requeridos'
       });
     }
+  }
+
+  private extractApiErrorMessage(err: unknown): string {
+    const defaultMsg = 'No se pudo crear el menú del día';
+
+    // Direct string
+    if (typeof err === 'string') return err;
+
+    // Angular HTTP error
+    if (err instanceof HttpErrorResponse) {
+      const payload = err.error;
+
+      // Text payload
+      if (typeof payload === 'string') return payload;
+
+      // JSON payload
+      if (payload && typeof payload === 'object') {
+        const message = (payload as { message?: unknown }).message;
+        if (typeof message === 'string') return message;
+
+        const errorsField = (payload as { errors?: unknown }).errors;
+        if (Array.isArray(errorsField)) {
+          return errorsField
+            .map((e: unknown) => (typeof e === 'string' ? e : JSON.stringify(e)))
+            .join(', ');
+        }
+        if (errorsField && typeof errorsField === 'object') {
+          const values = Object.values(errorsField as Record<string, unknown[]>).flat();
+          return values.map((v: unknown) => (typeof v === 'string' ? v : JSON.stringify(v))).join(', ');
+        }
+      }
+
+      if (typeof err.message === 'string' && err.message) return err.message;
+      if (err.status === 400) return 'Solicitud inválida (400). Verifique los datos enviados.';
+    }
+
+    // Generic error-like object with message
+    if (this.hasMessage(err)) return err.message;
+
+    return defaultMsg;
+  }
+
+  private hasMessage(x: unknown): x is { message: string } {
+    return !!x && typeof x === 'object' && typeof (x as { message?: unknown }).message === 'string';
+  }
+
+  private getProductDisplayName(productId: number): string {
+    for (const products of this.availableProducts().values()) {
+      const found = products.find(p => p.id === productId);
+      if (found) return `${found.name} (#${found.id})`;
+    }
+    return `ID ${productId}`;
   }
 
   private markFormGroupTouched() {

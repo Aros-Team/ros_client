@@ -51,8 +51,8 @@ jobs:
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.resend.com
-          server_port: 587
-          username: username
+          server_port: 465
+          username: resend
           password: ${{ secrets.RESEND_API_KEY }}
           subject: "Deployment Required: New AROS Client image ${{ env.IMAGE_VERSION }} available"
           to: ${{ secrets.MAIL_RECIPIENT }}

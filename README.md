@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-# Accrox Aros: Restaurant ordering system (Client repository)
-
-AROS es un sistema de gestion de pedidos para los restaurantes del siglo XXI. Su objetivo es optimizar tiempos de entrega, reducir costos operativos y aumentar la productividad del personal.
-
-## Tecnologias
-Al ser un producto empresarial, buscamos plataformas estables, escalables y con respaldo en el mercado. Por ello elegimos:
-
-- Angular 20
-- Angular Material
-- Tailwindcss
-=======
 # Accrox Aros: Sistema de Gestión de Pedidos (Repositorio Cliente)
 
 AROS es un sistema de gestión de pedidos para los restaurantes del siglo XXI. Su objetivo es optimizar tiempos de entrega, reducir costos operativos y aumentar la productividad del personal.
@@ -34,7 +22,7 @@ src/app/
 ├── areas/                  # Áreas que agrupan features relacionadas
 │   ├── public/             # Área pública
 │   └── admin/              # Área administrativa
-├── shared/                 # Componentes realmente compartidos
+├── shared/                 # Recursos compartidos
 │   └── components/         # Componentes reutilizables
 ├── features/               # Módulos de funcionalidades específicas
 │   ├── auth/               # Módulo de autenticación
@@ -85,18 +73,6 @@ areas/
     └── components/             // Componentes específicos del área
 ```
 
-Ejemplo de uso en routing:
-```typescript
-{
-  path: 'admin',
-  component: AdminArea,          // Área como contenedor
-  children: [
-    { path: 'products', loadComponent: () => import('./features/admin/products') },
-    { path: 'users', loadComponent: () => import('./features/admin/users') }
-  ]
-}
-```
-
 #### 4. **Definir Modelos e Interfaces**
 Todas las interfaces y tipos van en:
 
@@ -123,4 +99,3 @@ core/services/
 ```
 
 Los features solo contienen componentes, no servicios.
->>>>>>> dev
